@@ -34,13 +34,10 @@ def update_task(table, body)
       key: { 'task-id': body['task-id'] },
       attribute_updates: {
         'is-active': { value: body['is-active'], action: "PUT" },
-      #  'task-name': { value: body['task-name'], action: "PUT" },
-      #  'updated-at': { value: body['updated-at'], action: "PUT" }
       }
     }
-    table.update_item(params)  # これやるとCORSに引っかかる
+    table.update_item(params) 
     { statusCode: 200, headers: CORS_HEADER, body: JSON.generate(body) }
-#    { statusCode: 200, body: JSON.generate(body) }
   rescue => e
     { statusCode: 500, headers: CORS_HEADER, body: e.to_json }
   end
