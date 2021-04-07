@@ -43,10 +43,6 @@ def update_task(table, body)
   end
 end
 
-def put_cors_test(table, body)
-  { statusCode: 200, headers: CORS_HEADER, body: JSON.generate(body) }
-end
-
 def list_task(table)
   begin
     scan_output = table.scan({ limit: 50, select: "ALL_ATTRIBUTES" })
@@ -82,7 +78,6 @@ def lambda_handler(event:, context:)
           get_task(table, path_param) 
         end
       when 'PUT'    then update_task(table, JSON.parse(event['body']))
-      #when 'PUT'    then put_cors_test(table, JSON.parse(event['body']))
       when 'POST'   then result = add_task(table, JSON.parse(event['body']))
       when 'DELETE' then delete_task(table, event['pathParameters']['proxy'])
       else 0

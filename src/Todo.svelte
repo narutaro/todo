@@ -1,5 +1,5 @@
 <script>
-  const baseURL = 'https://<api-id>.execute-api.region.amazonaws.com/dev/tasks'
+  const baseURL = 'https://<api-id>.execute-api.<region>.amazonaws.com/dev/tasks'
 
   let taskName = ""
   let checked = false
@@ -26,14 +26,12 @@
   const listTasks = async () => {
     console.log('listTasks called')
 	  const res = await fetch(baseURL);
-    //return await res.json()
     return await sortByCreatedAt(res.json())
 	}
 
   const getTask = async (taskId) => {
     console.log('getTask called')
 	  const task = await fetch(baseURL + '/' +taskId);
-    //console.log(task.json())
     return await task.json()
   }
 
@@ -54,8 +52,7 @@
       method: 'POST',
       body: JSON.stringify(taskData)
     });
-    todos = listTasks() // 代入しないとリアクティブが発火しない
-    //return await res.json()
+    todos = listTasks() 
 	}
 
   const deleteTask = async (taskId) => {
@@ -64,7 +61,6 @@
       method: 'DELETE',
     });
     todos = listTasks() // assignment to ignite the reactivity
-    //return await res.json()
 	}
 
   const completeTask = async (taskId, status) => {
@@ -79,7 +75,6 @@
   function showDetail(taskId) {
     console.log('showDetail called')
     modalOn = true
-    //return getTask(taskId)
     taskDetail = getTask(taskId)
   }
 
